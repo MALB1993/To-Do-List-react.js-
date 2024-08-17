@@ -11,7 +11,7 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/todos" element={<TodoProvider> <RouteTodo /> </TodoProvider>} />
+          <Route path="/todos/*" element={<TodoProvider> <RouteTodo /> </TodoProvider>} />
         </Routes>
       </BrowserRouter>
     </div>
