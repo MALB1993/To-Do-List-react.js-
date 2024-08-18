@@ -10,7 +10,7 @@ const TodoProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(TodoReducer, initialState);
     const [error, setError] = useState(null);
-
+    const [loading, setLoading] = useState(false);
     const fetchTodos = useCallback(async () => {
         try {
             const response = await axios.get("https://jsonplaceholder.typicode.com/todos");
@@ -24,8 +24,20 @@ const TodoProvider = ({ children }) => {
         }
     }, [dispatch]);
 
+    const filterTodos = useCallback( async(count) => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${count}`)
+            dispatch({ type: "SET_TODOS", payload: response.data });
+        } catch (error) {
+            setError(error.message);
+        }finally{
+            setLoading(false);
+        }
+    },[dispatch]);
+
     return (
-        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error }}>
+        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error , filterTodos}}>
             {children}
         </TodoContext.Provider>
     );

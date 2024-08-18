@@ -2,7 +2,8 @@ const TodoReducer = (state, action) => {
     switch (action.type) {
         case "SET_TODOS":
             return { ...state, todos: action.payload };
-
+        case "SET_FILTER":
+            return { ...state, todos: action.payload };
         default:
             return state;
     }

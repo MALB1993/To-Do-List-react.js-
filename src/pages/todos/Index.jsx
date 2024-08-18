@@ -3,6 +3,7 @@ import { Card, Col, Container, Row } from "react-bootstrap";
 import TodoContext from "../../context/todos/TodoContext";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./scss/Index.scss";
+import Filter from "../../components/todos/Filter";
 
 const IndexTodo = () => {
     const { todos, fetchTodos, error } = useContext(TodoContext);
@@ -14,6 +15,8 @@ const IndexTodo = () => {
     return (
         <Container className="my-4">
             {error && <p className="text-danger text-center">Error: {error}</p>}
+                    <Filter todos={todos}/>
+            
             <Row className="g-3">
                 {todos && todos.length > 0 ?
                     todos.map((todo) => (
