@@ -4,6 +4,8 @@ const TodoReducer = (state, action) => {
             return { ...state, todos: action.payload };
         case "SET_FILTER":
             return { ...state, todos: action.payload };
+        case "ADD_TODO":
+            return { ...state, todos: [action.payload, ...state.todos] };
         default:
             return state;
     }

@@ -11,6 +11,7 @@ const TodoProvider = ({ children }) => {
     const [state, dispatch] = useReducer(TodoReducer, initialState);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    // get todos
     const fetchTodos = useCallback(async () => {
         try {
             const response = await axios.get("https://jsonplaceholder.typicode.com/todos");
@@ -24,7 +25,8 @@ const TodoProvider = ({ children }) => {
         }
     }, [dispatch]);
 
-    const filterTodos = useCallback( async(count) => {
+    // filter by count 
+    const filterTodos = useCallback(async (count) => {
         setLoading(true);
         try {
             setLoading(false);
@@ -33,13 +35,29 @@ const TodoProvider = ({ children }) => {
         } catch (error) {
             setLoading(false);
             setError(error.message);
-        }finally{
+        } finally {
             setLoading(false);
         }
-    },[dispatch]);
+    }, [dispatch]);
+
+    // added new item for todo list
+    const addTodo = useCallback(async (title) => {
+        setLoading(true);
+        try {
+            const response =  await axios.post("https://jsonplaceholder.typicode.com/todos", {
+                title: title,
+                completed: false,
+            });
+            dispatch({ type: "ADD_TODO", payload: response.data });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    },[dispatch])
 
     return (
-        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error , loading ,filterTodos}}>
+        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error, loading, filterTodos , addTodo}}>
             {children}
         </TodoContext.Provider>
     );

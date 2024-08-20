@@ -20,7 +20,6 @@ const IndexTodo = () => {
             <ErrorMessage error={error} />
             <Row className="g-3">
                 <CreateTodo todos={todos} />
-                <hr />
                 <Filter todos={todos} />
                 <TodoList todos={todos} />
             </Row>
