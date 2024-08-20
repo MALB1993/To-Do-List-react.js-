@@ -2,6 +2,7 @@ import { useCallback, useReducer, useState } from "react";
 import TodoContext from "./TodoContext";
 import TodoReducer from "./TodoReducer";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const TodoProvider = ({ children }) => {
     const initialState = {
@@ -44,7 +45,7 @@ const TodoProvider = ({ children }) => {
     const addTodo = useCallback(async (title) => {
         setLoading(true);
         try {
-            const response =  await axios.post("https://jsonplaceholder.typicode.com/todos", {
+            const response = await axios.post("https://jsonplaceholder.typicode.com/todos", {
                 title: title,
                 completed: false,
             });
@@ -54,10 +55,36 @@ const TodoProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    },[dispatch])
+    }, [dispatch])
+
+    // update todo
+    const updateTodos = useCallback(async (todo) => {
+        setLoading(true);
+        try {
+            const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${todo.id}`, {
+                title: todo.title,
+                completed: todo.completed ? false : true,
+            });
+            dispatch({ type: "UPDATE_TODO", payload: response.data });
+            Swal.fire({
+                title: "Task Updated !",
+                icon: "success",
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000,
+                toast: true,
+                position: 'top'
+            });
+        } catch (error) {
+            console.error(error);
+            
+        }finally{
+            setLoading(false);
+        }
+    }, [dispatch]);
 
     return (
-        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error, loading, filterTodos , addTodo}}>
+        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error, loading, filterTodos, addTodo, updateTodos }}>
             {children}
         </TodoContext.Provider>
     );
