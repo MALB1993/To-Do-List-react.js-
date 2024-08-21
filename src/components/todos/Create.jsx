@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Button, Col, Row, Spinner } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import TodoContext from '../../context/todos/TodoContext';
 import Swal from "sweetalert2";

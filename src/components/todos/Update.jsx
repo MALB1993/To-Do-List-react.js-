@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import TodoContext from "../../context/todos/TodoContext";
-import { Spinner } from "react-bootstrap";
 import Loading from "../shared/Loading";
 
 const UpdateTodo = ({ todo }) => {
