@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import TodoContext from "../../context/todos/TodoContext";
 import { Spinner } from "react-bootstrap";
+import Loading from "../shared/Loading";
 
 const DeleteTodo = ({ todoId }) => {
 
@@ -23,12 +24,7 @@ const DeleteTodo = ({ todoId }) => {
 
     return (
         <>
-            { isDeleting ?
-                <Spinner animation="grow" role="status" size="sm">
-                    <span className="visually-hidden">
-                        Loading...
-                    </span>
-                </Spinner> : <i onClick={() => handleClick()} className="bi bi-trash fs-5 pointer text-danger"></i> 
+            { isDeleting ? <Loading /> : <i onClick={() => handleClick()} className="bi bi-trash fs-5 pointer text-danger"></i> 
             }
         </>
     )

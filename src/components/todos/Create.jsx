@@ -3,6 +3,7 @@ import { Button, Col, Row, Spinner } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import TodoContext from '../../context/todos/TodoContext';
 import Swal from "sweetalert2";
+import Loading from '../shared/Loading';
 
 
 function CreateTodo() {
@@ -44,11 +45,7 @@ function CreateTodo() {
                         </div>
                         <Button variant='btn btn-primary mx-2' type="submit">
                             {isLoading ?
-                                <Spinner animation="grow" role="status" size="sm">
-                                    <span className="visually-hidden">
-                                        Loading...
-                                    </span>
-                                </Spinner>
+                                <Loading />
                                 :
                                 <> <i className='bi bi-plus'></i> Create </>
                             }
