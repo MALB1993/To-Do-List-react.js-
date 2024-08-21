@@ -83,8 +83,30 @@ const TodoProvider = ({ children }) => {
         }
     }, [dispatch]);
 
+    // delete todo
+    const deleteTodos = useCallback(async(todoId) => {
+        setLoading(true);
+        try {
+            await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`);
+            dispatch({ type: "DELETE_TODO", payload: todoId});
+            Swal.fire({
+                title: "Task Delete !",
+                icon: "warning",
+                showConfirmButton: false,
+                timerProgressBar: true,
+                timer: 3000,
+                toast: true,
+                position: 'top'
+            });
+        } catch (error) {
+            console.error(error);
+        }finally{
+            setLoading(false);
+        }
+    },[dispatch]);
+
     return (
-        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error, loading, filterTodos, addTodo, updateTodos }}>
+        <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error, loading, filterTodos, addTodo, updateTodos, deleteTodos }}>
             {children}
         </TodoContext.Provider>
     );

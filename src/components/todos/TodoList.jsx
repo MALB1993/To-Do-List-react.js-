@@ -1,5 +1,6 @@
 import { Card, Col } from "react-bootstrap";
 import UpdateTodo from "./Update";
+import DeleteTodo from "./Delete";
 
 const TodoList = ({ todos }) => {
     return (
@@ -12,6 +13,7 @@ const TodoList = ({ todos }) => {
                                     <Card.Text>{todo.completed ? <del>{todo.title}</del> : todo.title}</Card.Text>
                                     <Card.Text className="d-flex align-items-center">
                                         <UpdateTodo todo={todo}/>
+                                        <DeleteTodo todoId={todo.id}/>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

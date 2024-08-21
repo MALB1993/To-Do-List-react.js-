@@ -30,7 +30,6 @@ const UpdateTodo = ({ todo }) => {
                         (<i onClick={(event) => handleClick(event)} className="bi fs-4 bi-check pointer text-primary"></i>)
                 )
             }
-            <i className="bi bi-trash fs-5 pointer text-danger"></i>
         </>
     )
 }
