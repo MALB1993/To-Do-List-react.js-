@@ -10,6 +10,8 @@ const TodoReducer = (state, action) => {
             return { ...state, todos: state.todos.map(todo => todo.id === action.payload.id ? { ...todo, completed: action.payload.completed } : todo) };
         case "DELETE_TODO":
             return { ...state, todos: state.todos.filter(todo => todo.id !== action.payload )};
+        case "SET_ERROR": 
+            return {...state, error: action.payload}
         default:
             return state;
     }

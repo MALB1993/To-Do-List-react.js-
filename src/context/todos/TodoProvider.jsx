@@ -15,11 +15,11 @@ const TodoProvider = ({ children }) => {
     // get todos
     const fetchTodos = useCallback(async () => {
         try {
-            const response = await axios.get("https://jsonplaceholder.typicode.com/todos");
+            const response = await axios.get("https://jsonplaceholder.typicode.com/todos1");
             if (response.status === 200) {
                 dispatch({ type: "SET_TODOS", payload: response.data });
             } else {
-                setError(`${response.status} : ${response.statusText}`);
+                dispatch({ type: "SET_ERROR", payload: `${response.status} : ${response.statusText}` });
             }
         } catch (error) {
             setError(error.message);
@@ -76,19 +76,19 @@ const TodoProvider = ({ children }) => {
                 position: 'top'
             });
         } catch (error) {
-            console.error(error);
-            
-        }finally{
+            dispatch({ type: "SET_ERROR", payload: error.message });
+
+        } finally {
             setLoading(false);
         }
     }, [dispatch]);
 
     // delete todo
-    const deleteTodos = useCallback(async(todoId) => {
+    const deleteTodos = useCallback(async (todoId) => {
         setLoading(true);
         try {
             await axios.delete(`https://jsonplaceholder.typicode.com/todos/${todoId}`);
-            dispatch({ type: "DELETE_TODO", payload: todoId});
+            dispatch({ type: "DELETE_TODO", payload: todoId });
             Swal.fire({
                 title: "Task Delete !",
                 icon: "warning",
@@ -100,10 +100,10 @@ const TodoProvider = ({ children }) => {
             });
         } catch (error) {
             console.error(error);
-        }finally{
+        } finally {
             setLoading(false);
         }
-    },[dispatch]);
+    }, [dispatch]);
 
     return (
         <TodoContext.Provider value={{ todos: state.todos, fetchTodos, error, loading, filterTodos, addTodo, updateTodos, deleteTodos }}>
